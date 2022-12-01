@@ -5,9 +5,9 @@ const router = express.Router();
 
 //router.get("/referral", addOneToRefferral);
 
-router.post("/signin", null);
-router.post("/signup", null);
-router.post("/signout", null);
+//router.post("/signin", null);
+//router.post("/signup", null);
+//router.post("/signout", null);
 
 module.exports = {
   routes: router,
