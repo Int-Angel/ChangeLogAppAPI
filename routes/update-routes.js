@@ -6,10 +6,11 @@ const {
   getProjectUpdate,
 } = require("../controllers/ProjectUpdateController");
 const { checkUpdateExists } = require("../utils/checkUpdateExists");
+const { checkProjectExists } = require("../utils/checkProjectExists");
 
 const router = express.Router();
 
-router.post("/create", createProjectUpdate);
+router.post("/create", checkProjectExists, createProjectUpdate);
 router.put("/update", checkUpdateExists, updateProjectUpdate);
 router.delete("/delete", checkUpdateExists, deleteProjectUpdate);
 router.get("/get/:project_id", getProjectUpdate);
