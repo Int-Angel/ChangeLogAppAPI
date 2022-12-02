@@ -4,9 +4,11 @@ const cors = require("cors");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const config = require("./config");
-const authRoutes = require("./routes/auth-routes");
 
-const { sequelize, AppUser } = require("./services/db");
+const authRoutes = require("./routes/auth-routes");
+const projectRoutes = require("./routes/project-routes");
+
+//const { sequelize, AppUser } = require("./services/db");
 
 const app = express();
 
@@ -25,6 +27,7 @@ app.use(
 );
 
 app.use("/auth", authRoutes.routes);
+app.use("/project", projectRoutes.routes);
 
 /*
 app.get("/", (req, res) => {
