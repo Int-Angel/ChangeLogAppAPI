@@ -7,6 +7,7 @@ const config = require("./config");
 
 const authRoutes = require("./routes/auth-routes");
 const projectRoutes = require("./routes/project-routes");
+const projectUpdateRoutes = require("./routes/update-routes");
 
 //const { sequelize, AppUser } = require("./services/db");
 
@@ -28,6 +29,7 @@ app.use(
 
 app.use("/auth", authRoutes.routes);
 app.use("/project", projectRoutes.routes);
+app.use("/update", projectUpdateRoutes.routes);
 
 /*
 app.get("/", (req, res) => {
