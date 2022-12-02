@@ -14,9 +14,6 @@ const createPoint = async (req, res, next) => {
 };
 
 const updatePoint = async (req, res, next) => {
-  /*
-      verify that point exists before update
-      */
   try {
     await Point.update(
       {
@@ -35,9 +32,6 @@ const updatePoint = async (req, res, next) => {
 };
 
 const deletePoint = async (req, res, next) => {
-  /*
-      verify that point exists before delete
-      */
   try {
     await Point.destroy({
       where: {
