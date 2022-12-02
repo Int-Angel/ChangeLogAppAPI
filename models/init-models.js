@@ -10,12 +10,24 @@ function initModels(sequelize) {
   var Project = _Project(sequelize, DataTypes);
   var Project_Update = _Project_Update(sequelize, DataTypes);
 
-  Project.belongsTo(AppUser, { as: "creator", foreignKey: "creator_id"});
-  AppUser.hasMany(Project, { as: "projects", foreignKey: "creator_id"});
-  Project_Update.belongsTo(Project, { as: "project", foreignKey: "project_id"});
-  Project.hasMany(Project_Update, { as: "project_updates", foreignKey: "project_id"});
-  Point.belongsTo(Project_Update, { as: "project_update", foreignKey: "project_update_id"});
-  Project_Update.hasMany(Point, { as: "points", foreignKey: "project_update_id"});
+  Project.belongsTo(AppUser, { as: "creator", foreignKey: "creator_id" });
+  AppUser.hasMany(Project, { as: "projects", foreignKey: "creator_id" });
+  Project_Update.belongsTo(Project, {
+    as: "project",
+    foreignKey: "project_id",
+  });
+  Project.hasMany(Project_Update, {
+    as: "project_updates",
+    foreignKey: "project_id",
+  });
+  Point.belongsTo(Project_Update, {
+    as: "project_update",
+    foreignKey: "project_update_id",
+  });
+  Project_Update.hasMany(Point, {
+    as: "points",
+    foreignKey: "project_update_id",
+  });
 
   return {
     AppUser,

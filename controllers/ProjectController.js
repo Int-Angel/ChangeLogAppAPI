@@ -54,7 +54,13 @@ const deleteProject = async (req, res, next) => {
 };
 
 const getProjects = async (req, res, next) => {
-  console.log("Get projects");
+  try {
+    const projects = await Project.findAll();
+    console.log("All projects:", JSON.stringify(projects, null, 2));
+    res.send({ projects: JSON.stringify(projects) });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
 };
 
 module.exports = {
