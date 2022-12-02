@@ -3,9 +3,6 @@ const bcrypt = require("bcryptjs");
 const { AppUser } = require("../services/db");
 
 const signUp = async (req, res, next) => {
-  /*
-    use middleware to verify that the user doesn't already exists
-  */
   try {
     console.log(req.body);
     AppUser.create({
