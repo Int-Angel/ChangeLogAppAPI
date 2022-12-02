@@ -5,12 +5,13 @@ const {
   deleteProject,
   getProjects,
 } = require("../controllers/ProjectController");
+const { checkProjectExists } = require("../utils/checkProjectExists");
 
 const router = express.Router();
 
 router.post("/create", createProject);
-router.put("/update", updateProject);
-router.delete("/delete", deleteProject);
+router.put("/update", checkProjectExists, updateProject);
+router.delete("/delete", checkProjectExists, deleteProject);
 router.get("/get", getProjects);
 
 module.exports = {
