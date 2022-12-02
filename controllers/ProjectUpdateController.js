@@ -14,9 +14,6 @@ const createProjectUpdate = async (req, res, next) => {
 };
 
 const updateProjectUpdate = async (req, res, next) => {
-  /*
-      verify that update exists before update
-      */
   try {
     await ProjectUpdate.update(
       {
@@ -35,9 +32,6 @@ const updateProjectUpdate = async (req, res, next) => {
 };
 
 const deleteProjectUpdate = async (req, res, next) => {
-  /*
-      verify that project exists before delete
-      */
   try {
     await ProjectUpdate.destroy({
       where: {
