@@ -1,5 +1,5 @@
 "use strict";
-const { Project } = require("../services/db");
+const { Project, ProjectUpdate, Point } = require("../services/db");
 
 const createProject = async (req, res, next) => {
   try {
@@ -8,6 +8,7 @@ const createProject = async (req, res, next) => {
       description: req.body.description,
       creator_id: req.body.creator_id,
       publication_date: new Date(),
+      project_status: 1,
     });
     res.send({ message: "Project created successfully!" });
   } catch (error) {
@@ -24,6 +25,7 @@ const updateProject = async (req, res, next) => {
       {
         name: req.body.name,
         description: req.body.description,
+        project_status: req.body.project_status,
       },
       {
         where: {
@@ -55,7 +57,16 @@ const deleteProject = async (req, res, next) => {
 
 const getProjects = async (req, res, next) => {
   try {
-    const projects = await Project.findAll();
+    const projects = await Project.findAll({
+      include: {
+        model: ProjectUpdate,
+        as: "project_updates",
+        include: {
+          model: Point,
+          as: "points",
+        },
+      },
+    });
     console.log("All projects:", JSON.stringify(projects, null, 2));
     res.send({ projects: JSON.stringify(projects) });
   } catch (error) {

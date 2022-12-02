@@ -54,12 +54,12 @@ const getPoints = async (req, res, next) => {
   try {
     const points = await Point.findAll({
       where: {
-        project_update_id: req.body.project_update_id,
+        project_update_id: req.params["project_update_id"],
       },
     });
     console.log(
       "All updates from update: ",
-      req.body.project_update_id,
+      req.params["project_update_id"],
       JSON.stringify(points, null, 2)
     );
     res.send({ points: JSON.stringify(points) });

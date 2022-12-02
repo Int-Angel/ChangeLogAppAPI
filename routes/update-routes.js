@@ -11,7 +11,7 @@ const router = express.Router();
 router.post("/create", createProjectUpdate);
 router.put("/update", updateProjectUpdate);
 router.delete("/delete", deleteProjectUpdate);
-router.get("/get", getProjectUpdate);
+router.get("/get/:project_id", getProjectUpdate);
 
 module.exports = {
   routes: router,

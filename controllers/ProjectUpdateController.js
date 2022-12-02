@@ -1,5 +1,5 @@
 "use strict";
-const { ProjectUpdate } = require("../services/db");
+const { ProjectUpdate, Point } = require("../services/db");
 
 const createProjectUpdate = async (req, res, next) => {
   try {
@@ -52,14 +52,19 @@ const deleteProjectUpdate = async (req, res, next) => {
 
 const getProjectUpdate = async (req, res, next) => {
   try {
+    console.log(req.params);
     const updates = await ProjectUpdate.findAll({
       where: {
-        project_id: req.body.project_id,
+        project_id: req.params["project_id"],
+      },
+      include: {
+        model: Point,
+        as: "points",
       },
     });
     console.log(
       "All updates from project: ",
-      req.body.project_id,
+      req.params["project_id"],
       JSON.stringify(updates, null, 2)
     );
     res.send({ updates: JSON.stringify(updates) });

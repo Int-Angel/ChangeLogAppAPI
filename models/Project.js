@@ -26,6 +26,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'AppUser',
         key: 'app_user_id'
       }
+    },
+    project_status: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,
