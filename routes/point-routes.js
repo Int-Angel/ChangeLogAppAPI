@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/create", checkUpdateExists, createPoint);
 router.put("/update", checkPointExists, updatePoint);
 router.delete("/delete", checkPointExists, deletePoint);
-router.get("/get/:project_update_id", getPoints);
+router.get("/get/:project_update_id", checkUpdateExists, getPoints);
 
 module.exports = {
   routes: router,
