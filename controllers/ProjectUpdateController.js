@@ -46,8 +46,10 @@ const deleteProjectUpdate = async (req, res, next) => {
 
 const getProjectUpdate = async (req, res, next) => {
   try {
-    console.log(req.params);
+    const { limit, offset } = req.query;
     const updates = await ProjectUpdate.findAll({
+      limit: limit ? parseInt(limit) : null,
+      offset: limit && offset ? parseInt(offset) : null,
       where: {
         project_id: req.params["project_id"],
       },

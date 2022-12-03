@@ -46,7 +46,10 @@ const deletePoint = async (req, res, next) => {
 
 const getPoints = async (req, res, next) => {
   try {
+    const { limit, offset } = req.query;
     const points = await Point.findAll({
+      limit: limit ? parseInt(limit) : null,
+      offset: limit && offset ? parseInt(offset) : null,
       where: {
         project_update_id: req.params["project_update_id"],
       },

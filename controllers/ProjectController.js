@@ -51,7 +51,10 @@ const deleteProject = async (req, res, next) => {
 
 const getProjects = async (req, res, next) => {
   try {
+    const { limit, offset } = req.query;
     const projects = await Project.findAll({
+      limit: limit ? parseInt(limit) : null,
+      offset: limit && offset ? parseInt(offset) : null,
       include: {
         model: ProjectUpdate,
         as: "project_updates",
@@ -61,7 +64,8 @@ const getProjects = async (req, res, next) => {
         },
       },
     });
-    console.log("All projects:", JSON.stringify(projects, null, 2));
+
+    console.log("Projects:", JSON.stringify(projects, null, 2));
     res.send({ projects: JSON.stringify(projects) });
   } catch (error) {
     res.status(500).send({ message: error.message });
