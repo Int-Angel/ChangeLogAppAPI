@@ -20,6 +20,7 @@ const ProjectUpdate = models.Project_Update;
 const Point = models.Point;
 
 module.exports = {
+  Sequelize,
   sequelize,
   models,
   AppUser,

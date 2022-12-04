@@ -1,5 +1,11 @@
 "use strict";
-const { Project, ProjectUpdate, Point } = require("../services/db");
+const {
+  Sequelize,
+  Project,
+  ProjectUpdate,
+  Point,
+  AppUser,
+} = require("../services/db");
 
 const createProject = async (req, res, next) => {
   try {
@@ -52,17 +58,49 @@ const deleteProject = async (req, res, next) => {
 const getProjects = async (req, res, next) => {
   try {
     const { limit, offset } = req.query;
+    const { creator, name } = req.query;
+    const { date, todate } = req.query;
+
+    const name_condition = name
+      ? { name: { [Sequelize.Op.like]: `%${name}%` } }
+      : null;
+
+    const creator_condition = creator
+      ? { username: { [Sequelize.Op.eq]: creator } }
+      : null;
+
+    let date_condition = date
+      ? { publication_date: { [Sequelize.Op.eq]: date } }
+      : null;
+
+    if (date && todate) {
+      date_condition = {
+        publication_date: {
+          [Sequelize.Op.between]: [date, todate],
+        },
+      };
+    }
+
     const projects = await Project.findAll({
       limit: limit ? parseInt(limit) : null,
       offset: limit && offset ? parseInt(offset) : null,
-      include: {
-        model: ProjectUpdate,
-        as: "project_updates",
-        include: {
-          model: Point,
-          as: "points",
+      where: Sequelize.and(name_condition, date_condition),
+      include: [
+        {
+          model: AppUser,
+          as: "creator",
+          attributes: ["app_user_id", "username", "email"],
+          where: creator_condition,
         },
-      },
+        {
+          model: ProjectUpdate,
+          as: "project_updates",
+          include: {
+            model: Point,
+            as: "points",
+          },
+        },
+      ],
     });
 
     console.log("Projects:", JSON.stringify(projects, null, 2));
