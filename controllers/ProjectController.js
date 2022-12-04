@@ -60,6 +60,11 @@ const getProjects = async (req, res, next) => {
     const { limit, offset } = req.query;
     const { creator, name } = req.query;
     const { date, todate } = req.query;
+    /**
+     Ideas:
+     - filter by status
+     - filter by description
+     */
 
     const name_condition = name
       ? { name: { [Sequelize.Op.like]: `%${name}%` } }

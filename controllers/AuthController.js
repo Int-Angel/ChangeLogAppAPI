@@ -1,5 +1,7 @@
 "use strict";
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("../config");
 const { AppUser } = require("../services/db");
 
 const signUp = async (req, res, next) => {
@@ -36,6 +38,12 @@ const signIn = async (req, res, next) => {
       });
     }
 
+    const token = jwt.sign({ id: user.id }, config.secret, {
+      expiresIn: 86400, // 24 hours
+    });
+
+    req.session.token = token;
+
     return res.status(200).send({
       app_user_id: user.app_user_id,
       username: user.username,
@@ -47,10 +55,15 @@ const signIn = async (req, res, next) => {
 };
 
 const signOut = async (req, res, next) => {
-  /*
-  Do after auth
-  */
-  console.log("signOut");
+  try {
+    req.session = null;
+    return res.status(200).send({
+      message: "You've been signed out!",
+    });
+  } catch (err) {
+    console.log("Error signout");
+    this.next(err);
+  }
 };
 
 module.exports = {

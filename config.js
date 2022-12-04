@@ -13,6 +13,7 @@ const {
   DB_PASS,
   DB_DATABASE,
   COOKIE_SECRET,
+  SECRET,
 } = process.env;
 
 assert(PORT, "PORT is REQUIRED");
@@ -36,4 +37,5 @@ module.exports = {
     },
   },
   cookie_secret: COOKIE_SECRET,
+  secret: SECRET,
 };
