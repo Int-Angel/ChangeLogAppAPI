@@ -71,7 +71,7 @@ const getProjects = async (req, res, next) => {
       : null;
 
     const creator_condition = creator
-      ? { username: { [Sequelize.Op.eq]: creator } }
+      ? { username: { [Sequelize.Op.like]: `%${creator}%` } }
       : null;
 
     let date_condition = date
