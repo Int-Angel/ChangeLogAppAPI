@@ -38,7 +38,7 @@ const signIn = async (req, res, next) => {
       });
     }
 
-    const token = jwt.sign({ id: user.id }, config.secret, {
+    const token = jwt.sign({ id: user.app_user_id }, config.secret, {
       expiresIn: 86400, // 24 hours
     });
 
@@ -48,6 +48,7 @@ const signIn = async (req, res, next) => {
       app_user_id: user.app_user_id,
       username: user.username,
       email: user.email,
+      token: token,
     });
   } catch (error) {
     res.status(500).send({ message: error.message });

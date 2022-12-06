@@ -14,7 +14,7 @@ const createProject = async (req, res, next) => {
       description: req.body.description,
       creator_id: req.body.creator_id,
       publication_date: new Date(),
-      project_status: 1,
+      project_status: 0,
     });
     res.send({ message: "Project created successfully!" });
   } catch (error) {
