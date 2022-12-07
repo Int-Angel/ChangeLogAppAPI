@@ -40,9 +40,159 @@ This projects uses SQL database.<br />
 
 You should be able to test the API<br />
 
-## End-Points documentation
+# End-Points documentation
 
-### Future Improvements
+## **SignIn**
+
+Returns JSON data about signed in user, contains the auth token necesary for all other end-points
+
+- **URL**
+
+  /auth/signin
+
+- **Method:**
+
+  `POST`
+
+- **Body**
+
+  **Required:**
+
+  `username=[string]`
+  `pass=[string]`
+
+  Pass is the password.
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ app_user_id : 12, username : "Jhon8000", email : "Jhon@gmail.com", token: "TOKEN"}`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+- **Sample Call:**
+
+  ```javascript
+  axios
+    .post("http://localhost:8080/auth/signin", {
+      username: username,
+      pass: password,
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  ```
+
+## **SignUp**
+
+Creates a new user. Returns success message.
+
+- **URL**
+
+  /auth/signup
+
+- **Method:**
+
+  `POST`
+
+- **Body**
+
+  **Required:**
+
+  `username=[string]`
+  `email=[string]`
+  `pass=[string]`
+
+  Pass is the password, this end-points uses bcryptjs to encrypt the password.
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "User registered successfully!"}`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+- **Sample Call:**
+
+  ```javascript
+  axios
+    .post("http://localhost:8080/auth/signup", {
+      username: username,
+      email: email,
+      pass: password,
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  ```
+
+## **SignOut**
+
+Signs out user, removes auth token from session. Returns success message.
+
+- **URL**
+
+  /auth/signout
+
+- **Method:**
+
+  `POST`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "You've been signed out!"}`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  axios
+    .post("http://localhost:8080/auth/signout", config)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  ```
+
+## Future Improvements
 
 - Add roles to the users<br />
   - PM<br />
@@ -56,3 +206,8 @@ You should be able to test the API<br />
   - Filter by project status<br />
 - Change project status int to enum<br />
 - Allow users to add their own status<br />
+
+  OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
