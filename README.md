@@ -427,29 +427,29 @@ Get a list of existing project. Returns JSON array that includes all projects.
 
   - **Code:** 200 <br />
     **Content:**
-    `{ Projects: [<br/>
-  {<br/>
-    "project_id": 3,<br/>
-    "name": "OSID",<br/>
-    "description": "AI insuline machine",<br/>
-    "publication_date": "2022-12-01",<br/>
-    "creator_id": 2,<br/>
-    "project_status": 0,<br/>
-    "creator": {<br/>
-      "app_user_id": 2,<br/>
-      "username": "Jhon8000",<br/>
-      "email": "Jhon@gmail.com"<br/>
-    },<br/>
-    "project_updates": [<br/>
-      {<br/>
-        "project_update_id": 15,<br/>
-        "description": "Create App",<br/>
-        "project_id": 3,<br/>
-        "points": []<br/>
-      }<br/>
-    ]<br/>
-  }<br/>
-] }`<br/>
+    `{ Projects: [
+  {
+    "project_id": 3,\n
+    "name": "OSID",\n
+    "description": "AI insuline machine",
+    "publication_date": "2022-12-01",
+    "creator_id": 2,
+    "project_status": 0,
+    "creator": {
+      "app_user_id": 2,
+      "username": "Jhon8000",
+      "email": "Jhon@gmail.com"
+    },
+    "project_updates": [
+      {
+        "project_update_id": 15,
+        "description": "Create App",
+        "project_id": 3,
+        "points": []
+      }
+    ]
+  }
+] }`
 
 - **Error Response:**
 
