@@ -1,3 +1,7 @@
+/**
+ * Verifies the existence of the project in the db
+ */
+
 "use strict";
 const { Project } = require("../services/db");
 

@@ -1,3 +1,7 @@
+/**
+ * Checks if the email or username are already register in the DB
+ */
+
 "use strict";
 const { AppUser } = require("../services/db");
 

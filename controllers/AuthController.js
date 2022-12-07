@@ -1,9 +1,16 @@
+/**
+ * Auth controller
+ */
+
 "use strict";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 const { AppUser } = require("../services/db");
 
+/**
+ * Creates new User
+ */
 const signUp = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -18,6 +25,9 @@ const signUp = async (req, res, next) => {
   }
 };
 
+/**
+ * Sign in existing user, returns auth token
+ */
 const signIn = async (req, res, next) => {
   try {
     const user = await AppUser.findOne({
@@ -55,6 +65,9 @@ const signIn = async (req, res, next) => {
   }
 };
 
+/**
+ * Signs out user, removes auth token from session
+ */
 const signOut = async (req, res, next) => {
   try {
     req.session = null;

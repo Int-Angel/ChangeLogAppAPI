@@ -1,3 +1,7 @@
+/**
+ * Access to all db models and db connection
+ */
+
 "use-strict";
 const Sequelize = require("sequelize");
 const initModels = require("../models/init-models").initModels;
@@ -9,9 +13,6 @@ const sequelize = new Sequelize(
   config.dbConfig.PASSWORD,
   { dialect: "mysql" }
 );
-
-//console.log("DB CONNECTION");
-//console.log(initModels);
 
 const models = initModels(sequelize);
 const AppUser = models.AppUser;

@@ -1,3 +1,7 @@
+/**
+ * Verifies the existence of the update in the db
+ */
+
 "use strict";
 const { ProjectUpdate } = require("../services/db");
 

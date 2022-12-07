@@ -1,3 +1,7 @@
+/**
+ * Verifies the existence of the point in the db
+ */
+
 "use strict";
 const { Point } = require("../services/db");
 

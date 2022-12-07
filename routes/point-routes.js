@@ -1,3 +1,12 @@
+/**
+ * Point routes:
+ * needs to provide Auth token for all end-points.
+ * - Create: creates a new point
+ * - update: update existing point
+ * - delete: delete point
+ * - get: get all points from a project update, supports pagination
+ */
+
 const express = require("express");
 const {
   createPoint,

@@ -1,6 +1,13 @@
+/**
+ * Update controller
+ */
+
 "use strict";
 const { ProjectUpdate, Point } = require("../services/db");
 
+/**
+ * Creates new update, needs to specify project_id
+ */
 const createProjectUpdate = async (req, res, next) => {
   try {
     ProjectUpdate.create({
@@ -13,6 +20,9 @@ const createProjectUpdate = async (req, res, next) => {
   }
 };
 
+/**
+ * Updates existing update, needs to specify project_update_id
+ */
 const updateProjectUpdate = async (req, res, next) => {
   try {
     await ProjectUpdate.update(
@@ -31,6 +41,9 @@ const updateProjectUpdate = async (req, res, next) => {
   }
 };
 
+/**
+ * Deletes project update, needs to specify project_update_id
+ */
 const deleteProjectUpdate = async (req, res, next) => {
   try {
     await ProjectUpdate.destroy({
@@ -44,6 +57,9 @@ const deleteProjectUpdate = async (req, res, next) => {
   }
 };
 
+/**
+ * Returns all updates from a project, needs to specify project_id
+ */
 const getProjectUpdate = async (req, res, next) => {
   try {
     const { limit, offset } = req.query;

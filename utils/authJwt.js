@@ -1,3 +1,7 @@
+/**
+ * Verifies the jwt token is correct and not expired.
+ */
+
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 

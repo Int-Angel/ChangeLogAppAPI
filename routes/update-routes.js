@@ -1,3 +1,12 @@
+/**
+ * Updates routes:
+ * needs to provide Auth token for all end-points.
+ * - Create: creates a new update
+ * - update: update existing update
+ * - delete: delete update
+ * - get: get all updates from a project, supports pagination
+ */
+
 const express = require("express");
 const {
   createProjectUpdate,

@@ -1,3 +1,7 @@
+/**
+ * Verifies the existence of the user in the db
+ */
+
 "use strict";
 const { AppUser } = require("../services/db");
 

@@ -1,6 +1,13 @@
+/**
+ * Point controller
+ */
+
 "use strict";
 const { Point } = require("../services/db");
 
+/**
+ * Creates a new point, needs to specify project_update_id
+ */
 const createPoint = async (req, res, next) => {
   try {
     Point.create({
@@ -13,6 +20,9 @@ const createPoint = async (req, res, next) => {
   }
 };
 
+/**
+ * Updates existion point,needs to specify point_id
+ */
 const updatePoint = async (req, res, next) => {
   try {
     await Point.update(
@@ -31,6 +41,9 @@ const updatePoint = async (req, res, next) => {
   }
 };
 
+/**
+ * Deletes point, needs to specify point_id
+ */
 const deletePoint = async (req, res, next) => {
   try {
     await Point.destroy({
@@ -44,6 +57,9 @@ const deletePoint = async (req, res, next) => {
   }
 };
 
+/**
+ * Returns all point from update, needs to specify project_update_id
+ */
 const getPoints = async (req, res, next) => {
   try {
     const { limit, offset } = req.query;

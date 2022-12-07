@@ -1,3 +1,10 @@
+/**
+ * Authentication routes:
+ *  - Sign in
+ *  - Sign up
+ *  - Sign out: needs to provide auth token
+ */
+
 const express = require("express");
 const { signIn, signUp, signOut } = require("../controllers/AuthController");
 const {

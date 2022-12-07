@@ -1,3 +1,7 @@
+/**
+ * Project controller
+ */
+
 "use strict";
 const {
   Sequelize,
@@ -7,6 +11,9 @@ const {
   AppUser,
 } = require("../services/db");
 
+/**
+ * Creates new project
+ */
 const createProject = async (req, res, next) => {
   try {
     Project.create({
@@ -22,6 +29,9 @@ const createProject = async (req, res, next) => {
   }
 };
 
+/**
+ * Updates existing project, needs to specify project_id
+ */
 const updateProject = async (req, res, next) => {
   try {
     await Project.update(
@@ -42,6 +52,9 @@ const updateProject = async (req, res, next) => {
   }
 };
 
+/**
+ * Deletes project, needs to specify project_id
+ */
 const deleteProject = async (req, res, next) => {
   try {
     await Project.destroy({
@@ -55,16 +68,14 @@ const deleteProject = async (req, res, next) => {
   }
 };
 
+/**
+ * Retuns all projects based on filters and pagination conditions
+ */
 const getProjects = async (req, res, next) => {
   try {
     const { limit, offset } = req.query;
     const { creator, name } = req.query;
     const { date, todate } = req.query;
-    /**
-     Ideas:
-     - filter by status
-     - filter by description
-     */
 
     const name_condition = name
       ? { name: { [Sequelize.Op.like]: `%${name}%` } }
