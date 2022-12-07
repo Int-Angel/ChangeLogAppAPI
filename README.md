@@ -30,6 +30,14 @@ This projects uses SQL database.<br />
 
 ![DB diagram](https://i.imgur.com/eotSHjE.png)
 
+### Project status:
+
+- 0: To-Do
+- 1: In progress
+- 2: Done
+
+This is currenlty a int, but shoud be a enum in the future.
+
 ## Installation
 
 1. Clone this repo<br />
@@ -58,8 +66,8 @@ Returns JSON data about signed in user, contains the auth token necesary for all
 
   **Required:**
 
-  `username=[string]`
-  `pass=[string]`
+  `username=[string]`<br/>
+  `pass=[string]`<br/>
 
   Pass is the password.
 
@@ -105,9 +113,9 @@ Creates a new user. Returns success message.
 
   **Required:**
 
-  `username=[string]`
-  `email=[string]`
-  `pass=[string]`
+  `username=[string]`<br/>
+  `email=[string]`<br/>
+  `pass=[string]`<br/>
 
   Pass is the password, this end-points uses bcryptjs to encrypt the password.
 
@@ -190,6 +198,290 @@ Signs out user, removes auth token from session. Returns success message.
     .catch((err) => {
       console.log(err);
     });
+  ```
+
+## **Create Project**
+
+Creates new project. Returns success message.
+
+- **URL**
+
+  /project/create
+
+- **Method:**
+
+  `POST`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `name=[string]`<br/>
+    `description=[string]`<br/>
+    `creator_id=[int]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "Project created successfully!"}`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 USER DOESN'T EXIST <br />
+    **Content:** `{ message: "User doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const projectPayload = {
+    name: name,
+    description: description,
+    creator_id: creator_id,
+  };
+  axios
+    .post("http://localhost:8080/project/create", projectPayload, config)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  ```
+
+## **Update Project**
+
+Updates existing project. Returns success message.
+
+- **URL**
+
+  /project/update
+
+- **Method:**
+
+  `PUT`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `project_id=[int]`<br/>
+
+  **Optional:**
+  `name=[string]`<br/>
+  `description=[string]`<br/>
+  `project_status=[int]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "Project updated successfully!" }`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 PROJECT DOESN'T EXIST <br />
+    **Content:** `{ message: "Project doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const projectPayload = {
+    project_status: newProgress,
+    project_id: project_id,
+  };
+  axios
+    .put("http://localhost:8080/project/update", projectPayload, config)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  ```
+
+## **Delete Project**
+
+Deletes existing project. Returns success message.
+
+- **URL**
+
+  /project/delete
+
+- **Method:**
+
+  `DELETE`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `project_id=[int]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "Project deleted successfully!" }`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 PROJECT DOESN'T EXIST <br />
+    **Content:** `{ message: "Project doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  axios.delete("http://localhost:8080/project/delete", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      project_id: project_id,
+    },
+  });
+  ```
+
+## **Get Projects**
+
+Get a list of existing project. Returns JSON array that includes all projects.
+
+- **URL**
+
+  /project/get
+
+- **Method:**
+
+  `GET`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+
+  **Optional:**
+  Pagination: <br/>
+  `limit=[int]`<br/>
+  `offset=[int]`<br/>
+  Filters:<br/>
+  `creator=[string]`<br/>
+  `name=[string]`<br/>
+  `date=[Date]`<br/>
+  `todate=[Date]`<br/>
+
+  If you only specifies `date `, you will get all projects from that date, but you can specify `date ` and `todate ` and you would get the projects from the range of that date.
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    `{ Projects: Projects: [
+  {
+    "project_id": 3,
+    "name": "OSID",
+    "description": "AI insuline machine",
+    "publication_date": "2022-12-01",
+    "creator_id": 2,
+    "project_status": 0,
+    "creator": {
+      "app_user_id": 2,
+      "username": "Jhon8000",
+      "email": "Jhon@gmail.com"
+    },
+    "project_updates": [
+      {
+        "project_update_id": 15,
+        "description": "Create App",
+        "project_id": 3,
+        "points": []
+      }
+    ]
+  }
+] }`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 PROJECT DOESN'T EXIST <br />
+    **Content:** `{ message: "Project doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  axios.delete("http://localhost:8080/project/delete", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      project_id: project_id,
+    },
+  });
   ```
 
 ## Future Improvements
