@@ -429,8 +429,8 @@ Get a list of existing project. Returns JSON array that includes all projects.
     **Content:**
     `{ Projects: [
   {
-    "project_id": 3,\n
-    "name": "OSID",\n
+    "project_id": 3,
+    "name": "OSID",
     "description": "AI insuline machine",
     "publication_date": "2022-12-01",
     "creator_id": 2,
@@ -474,13 +474,293 @@ Get a list of existing project. Returns JSON array that includes all projects.
 - **Sample Call:**
 
   ```javascript
-  axios.delete("http://localhost:8080/project/delete", {
+  const params = {};
+  params.name = projectName;
+  params.creator = creator;
+  params.date = startDate;
+  params.todate = endDate;
+  params.limit = limit;
+  params.offset = offset;
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+    params: params,
+  };
+
+  axios.get("http://localhost:8080/project/get", config).then((response) => {
+    console.log(response);
+  });
+  ```
+
+## **Create Update**
+
+Creates new update for a project. Returns success message.
+
+- **URL**
+
+  /update/create
+
+- **Method:**
+
+  `POST`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `description=[string]`<br/>
+    `project_id=[int]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "Project Update created successfully!"}`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 PROJECT DOESN'T EXIST <br />
+    **Content:** `{ message: "Project doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const updatePayload = {
+    description: description,
+    project_id: project_id,
+  };
+  axios
+    .post("http://localhost:8080/update/create", updatePayload, config)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  ```
+
+## **Update Update**
+
+Updates existing Update. Returns success message.
+
+- **URL**
+
+  /update/update
+
+- **Method:**
+
+  `PUT`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `project_update_id=[int]`<br/>
+    `description=[string]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "Project Update updated successfully!" }`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 UPDATE DOESN'T EXIST <br />
+    **Content:** `{ message: "Update doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const updatePayload = {
+    description: description,
+    project_update_id: project_update_id,
+  };
+  axios
+    .put("http://localhost:8080/update/update", updatePayload, config)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  ```
+
+## **Delete Update**
+
+Deletes existing update. Returns success message.
+
+- **URL**
+
+  /update/delete
+
+- **Method:**
+
+  `DELETE`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `project_update_id=[int]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "Project Update deleted successfully!" }`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 UPDATE DOESN'T EXIST <br />
+    **Content:** `{ message: "Update doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  axios.delete("http://localhost:8080/update/delete", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
     data: {
-      project_id: project_id,
+      project_update_id: project_update_id,
     },
+  });
+  ```
+
+## **Get Updates**
+
+Get a list of existing updates from a project. Returns JSON array that includes all updates.
+
+- **URL**
+
+  /update/get
+
+- **Method:**
+
+  `GET`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `project_id=[int]`<br/>
+
+  **Optional:**
+  Pagination: <br/>
+  `limit=[int]`<br/>
+  `offset=[int]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    `{ updates: [
+  {
+    "project_update_id": 5,
+    "description": "Level design",
+    "project_id": 5,
+    "points": [
+      {
+        "point_id": 9,
+        "description": "Level 1: Becky's house",
+        "project_update_id": 5
+      },
+      {
+        "point_id": 10,
+        "description": "Level 2",
+        "project_update_id": 5
+      }
+    ]
+  }
+] }`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 PROJECT DOESN'T EXIST <br />
+    **Content:** `{ message: "Project doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  const params = {};
+  params.limit = limit;
+  params.offset = offset;
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+    params: params,
+  };
+
+  axios.get("http://localhost:8080/update/get", config).then((response) => {
+    console.log(response);
   });
   ```
 
