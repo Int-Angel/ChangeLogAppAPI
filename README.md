@@ -466,11 +466,6 @@ Get a list of existing project. Returns JSON array that includes all projects.
   - **Code:** 403 NO TOKEN PROVIDED <br />
     **Content:** `{ message : "No token provided!" }`
 
-    OR
-
-  - **Code:** 400 PROJECT DOESN'T EXIST <br />
-    **Content:** `{ message: "Project doesn't exist!" }`
-
 - **Sample Call:**
 
   ```javascript
@@ -764,6 +759,266 @@ Get a list of existing updates from a project. Returns JSON array that includes 
   });
   ```
 
+## **Create Point**
+
+Creates new point for a update. Returns success message.
+
+- **URL**
+
+  /point/create
+
+- **Method:**
+
+  `POST`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `description=[string]`<br/>
+    `project_update_id=[int]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "Point created successfully!"}`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 UPDATE DOESN'T EXIST <br />
+    **Content:** `{ message: "Project Update doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const pointPayload = {
+    description: description,
+    project_update_id: project_update_id,
+  };
+  axios
+    .post("http://localhost:8080/point/create", pointPayload, config)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  ```
+
+## **Update Point**
+
+Updates existing point. Returns success message.
+
+- **URL**
+
+  /point/update
+
+- **Method:**
+
+  `PUT`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `point_id=[int]`<br/>
+    `description=[string]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "Point updated successfully!" }`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 POINT DOESN'T EXIST <br />
+    **Content:** `{ message: "Point doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const pointPayload = {
+    description: description,
+    point_id: point_id,
+  };
+  axios
+    .put("http://localhost:8080/point/update", pointPayload, config)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  ```
+
+## **Delete Update**
+
+Deletes existing point. Returns success message.
+
+- **URL**
+
+  /point/delete
+
+- **Method:**
+
+  `DELETE`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `point_id=[int]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `{ message: "Point deleted successfully!" }`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 POINT DOESN'T EXIST <br />
+    **Content:** `{ message: "Point doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  axios.delete("http://localhost:8080/point/delete", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      point_id: point_id,
+    },
+  });
+  ```
+
+## **Get Points**
+
+Get a list of existing points from a update. Returns JSON array that includes all points.
+
+- **URL**
+
+  /point/get
+
+- **Method:**
+
+  `GET`
+
+- **Body**
+
+  **Required:**
+
+  - Include Auth token in header <br />
+    `project_update_id=[int]`<br/>
+
+  **Optional:**
+  Pagination: <br/>
+  `limit=[int]`<br/>
+  `offset=[int]`<br/>
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    `{ points: [
+  {
+    "point_id": 1,
+    "description": "Express.js project",
+    "project_update_id": 2
+  }
+] }`
+
+- **Error Response:**
+
+  - **Code:** 500 DB ERROR <br />
+    **Content:** `{ message : message.error }`
+
+    OR
+
+  - **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "Unauthorized!" }`
+
+    OR
+
+  - **Code:** 403 NO TOKEN PROVIDED <br />
+    **Content:** `{ message : "No token provided!" }`
+
+    OR
+
+  - **Code:** 400 UPDATE DOESN'T EXIST <br />
+    **Content:** `{ message: "Update doesn't exist!" }`
+
+- **Sample Call:**
+
+  ```javascript
+  const params = {};
+  params.limit = limit;
+  params.offset = offset;
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+    params: params,
+  };
+
+  axios.get("http://localhost:8080/point/get", config).then((response) => {
+    console.log(response);
+  });
+  ```
+
 ## Future Improvements
 
 - Add roles to the users<br />
@@ -778,8 +1033,3 @@ Get a list of existing updates from a project. Returns JSON array that includes 
   - Filter by project status<br />
 - Change project status int to enum<br />
 - Allow users to add their own status<br />
-
-  OR
-
-  - **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
